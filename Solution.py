@@ -31,14 +31,14 @@ class Solution:
         discovered = {}
         queue = []
         queue.append(start)
-        mypaths[start].append(start)
         clientpaths = {}
         list_clients = self.info["list_clients"]
-        #---- ^Above is the declaration of all of the necessary variables^-----
+        #-----^Above is the declaration of all of the necessary variables^-----
 
         self.declarations(n,start,delays,discovered,mypaths)
-        # --- ^ The above function formates the delay, discovered and mypath variable^------
-
+        #-----^ The above function formates the delay, discovered and mypath variable^------
+        mypaths[start].append(start)
+        #-----^ sets the root nodes lsit to contain itself
         while queue:
             current = queue.pop(0)
             for connection in mygraph[current]:
