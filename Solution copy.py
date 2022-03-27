@@ -3,7 +3,7 @@ import heapq
 from collections import deque
 from Simulator import Simulator
 import sys
-
+# This project was worked on by Joseph Maiarana, David Wang, Jameson Reid
 class Solution:
 
     def __init__(self, problem, isp, graph, info):
@@ -20,16 +20,22 @@ class Solution:
         n = len(self.graph)
         start = self.isp
         mygraph = self.graph
+        #print(self.info)
+        #print(mygraph)
+
         paths, bandwidths, priorities = {}, {}, {}
         # Note: You do not need to modify all of the above. For Problem 1, only the paths variable needs to be modified. If you do modify a variable you are not supposed to, you might notice different revenues outputted by the Driver locally since the autograder will ignore the variables not relevant for the problem.
         # WARNING: DO NOT MODIFY THE LINE BELOW, OR BAD THINGS WILL HAPPEN
         mypaths = {}
         delays = []
         discovered = {}
-        self.declarations(n,start,delays,discovered,mypaths)
         queue = []
         queue.append(start)
+        clientpaths = {}
+        list_clients = self.info["list_clients"]
         #-----^Above is the declaration of all of the necessary variables^-----
+
+        self.declarations(n,start,delays,discovered,mypaths)
         #-----^ The above function formates the delay, discovered and mypath variable^------
         mypaths[start].append(start)
         #-----^ sets the root nodes list to contain itself
@@ -45,12 +51,10 @@ class Solution:
         #-----^ the above while loop is based on the BFS algorithm from Algorithm page 90 section 3.3
         #-----^ The only difference is this code is the fact that the delay list is the length of the shortest paths and the mypath dictionary stores the shortest path including the node itself as the end node. 
         #-----^ example: the list of the start node will be in the key:value format of: start:[start]. A random node will look like: node:[start,..., node]
-        clientpaths = {}
-        list_clients = self.info["list_clients"]
         for client in list_clients:
             clientpaths[client] = mypaths[client]
         paths = clientpaths
-        #-----^ the above code takes the client list from info  and stores the client and their list inside a dictionary in the format of client:[client_list]
+        #-----^ the above code takes the client list from info  and stores the client and their list inside a dictionary in the format of client:[client_list].
         return (paths, bandwidths, priorities)
 
     def declarations(self,n, start , dellist, discovereddic, mypathdic):
@@ -62,3 +66,4 @@ class Solution:
                 discovereddic[m] = False
                 dellist.append(-1)
             mypathdic[m] = []
+        
